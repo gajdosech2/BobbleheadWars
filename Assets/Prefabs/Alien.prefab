@@ -501,6 +501,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4672023948806398}
+  - component: {fileID: 95917369193428214}
   m_Layer: 0
   m_Name: BobbleEnemy-Head
   m_TagString: Untagged
@@ -1197,8 +1198,25 @@ Animator:
   m_GameObject: {fileID: 1297338950380636}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 7df968ec880694920bcb46964b9d62a4, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 05f40b13ccb646e47aeceda28df3d3ee, type: 2}
   m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!95 &95917369193428214
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1885738659685048}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8f9c9658dcf4e9245a14d2c844b31b98, type: 2}
+  m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
