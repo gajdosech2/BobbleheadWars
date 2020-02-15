@@ -18,15 +18,37 @@ public class GameManager : MonoBehaviour {
 	private float generatedSpawnTime = 0;
 	private float currentSpawnTime = 0;
 
+	public GameObject upgradePrefab;
+	public Gun gun;
+	public float upgradeMaxTimeSpawn = 7.5f;
+
+	private bool spawnedUpgrade = false;
+	private float actualUpgradeTime = 0;
+	private float currentUpgradeTime = 0;
+
 
 	// Use this for initialization
 	void Start () {
-		
+		actualUpgradeTime = Mathf.Abs(Random.Range(upgradeMaxTimeSpawn - 3.0f, upgradeMaxTimeSpawn));
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		currentUpgradeTime += Time.deltaTime;
 		currentSpawnTime += Time.deltaTime;
+
+		if (currentUpgradeTime > actualUpgradeTime && spawnedUpgrade == false)
+        {
+			int randomNumber = Random.Range(0, spawnPoints.Length - 1);
+			GameObject spawnLocation = spawnPoints[randomNumber];
+			GameObject upgrade = Instantiate(upgradePrefab) as GameObject;
+			Upgrade upgradeScript = upgrade.GetComponent<Upgrade>();
+			upgradeScript.gun = gun;
+			upgrade.transform.position = spawnLocation.transform.position;
+			spawnedUpgrade = true;
+			SoundManager.Instance.PlayOneShot(SoundManager.Instance.powerUpAppear);
+        }
+
 		if (currentSpawnTime > generatedSpawnTime)
         {
 			currentSpawnTime = 0;
