@@ -26,14 +26,30 @@ public class GameManager : MonoBehaviour {
 	private float actualUpgradeTime = 0;
 	private float currentUpgradeTime = 0;
 
+	private PlayerController playerController;
+	public GameObject deathFloor;
+
+	public Animator arenaAnimator;
+
+	private void endGame()
+    {
+		SoundManager.Instance.PlayOneShot(SoundManager.Instance.elevatorArrived);
+		arenaAnimator.SetTrigger("PlayerWon");
+    }
 
 	// Use this for initialization
 	void Start () {
 		actualUpgradeTime = Mathf.Abs(Random.Range(upgradeMaxTimeSpawn - 3.0f, upgradeMaxTimeSpawn));
+		playerController = player.GetComponent<PlayerController>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (playerController.isDead)
+        {
+			return;
+        }
+
 		currentUpgradeTime += Time.deltaTime;
 		currentSpawnTime += Time.deltaTime;
 
@@ -83,9 +99,21 @@ public class GameManager : MonoBehaviour {
 						alienScript.target = player.transform;
 						Vector3 targetRotation = new Vector3(player.transform.position.x, newAlien.transform.position.y, player.transform.position.z);
 						newAlien.transform.LookAt(targetRotation);
+						alienScript.OnDestroy.AddListener(AlienDestroyed);
+						alienScript.GetDeathParticles().SetDeathFloor(deathFloor);
                     }
                 }
             }
         }
 	}
+
+	public void AlienDestroyed()
+    {
+		aliensOnScreen -= 1;
+		totalAliens -= 1;
+		if (totalAliens == 0)
+        {
+			Invoke("endGame", 2.0f);
+        }
+    }
 }
